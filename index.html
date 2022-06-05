@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        .content {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .addTask {
+            font-size: 20px;
+            background-color: #9b17bf;
+            padding: 30px 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .butt {
+            background-color: lightBlue;
+            cursor: pointer;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .butt:hover {
+            background-color: #0909e8;
+        }
+
+        .myTask {
+            height: 16px;
+            padding: 10px;
+
+        }
+
+        .square {
+            border-radius: 0px;
+            border: 0;
+        }
+
+        ::placeholder {
+            color: #0909e8;
+            font-size: 15px;
+            line-height: 30px;
+            padding: 5px;
+        }
+
+        .tdlHead {
+            margin-bottom: 20px;
+
+        }
+
+        .noSpace {
+            font-size: 0px;
+        }
+
+        .noSpace input {
+            display: inline-block;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        ul li {
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            background: #9bcdef;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        ul li:nth-child(odd) {
+            background: #edf7fc;
+        }
+
+        ul li:hover {
+            background: #0909e8;
+        }
+
+        .cancelMark {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 12px 16px 12px 16px;
+        }
+
+        .cancelMark:hover {
+            background-color: #f44336;
+            color: white;
+        }
+
+        ul li.checked {
+            background: #0909e8;
+            color: #fff;
+            text-decoration: line-through;
+        }
+
+        ul li.checked::before {
+            content: '';
+            position: absolute;
+            border-color: #fff;
+            border-style: solid;
+            border-width: 0 2px 2px 0;
+            top: 10px;
+            left: 16px;
+            transform: rotate(45deg);
+            height: 15px;
+            width: 7px;
+        }
+    </style>
+    <script>
+        var myList, taskForm;
+
+        function addTask() {
+            var newTask = document.getElementById("myTask").value
+            if (newTask == "") return;
+            taskForm.reset()
+            var listElement = document.createElement('li')
+            var textNode = document.createTextNode(newTask)
+            var cancelNode = document.createElement('span')
+            var cancelMark = document.createTextNode("\u00D7")
+            cancelNode.appendChild(cancelMark)
+            cancelNode.className = "cancelMark"
+            listElement.appendChild(textNode)
+            listElement.appendChild(cancelNode)
+            myList.appendChild(listElement)
+            var cancelMark = document.getElementsByClassName("cancelMark")
+            for (i = 0; i < cancelMark.length; i++) {
+                cancelMark[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="addTask">
+            <span class="tdlHead">My To Do List<br /></span>
+            <div class="noSpace">
+                <form onsubmit="return false" id="taskForm">
+                    <input type="text" id="myTask" class="square myTask" placeholder="Title..." />
+                    <input type="submit" class="square butt" value="Add" onclick="addTask()" />
+                </form>
+            </div>
+        </div>
+        <div class="myList">
+            <ul id="myList">
+            </ul>
+        </div>
+    </div>
+    <script>
+        myList = document.getElementById("myList")
+        taskForm = document.getElementById("taskForm")
+        myList.addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+    </script>
+
+
+</body>
+
+</html>
